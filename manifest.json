@@ -1,0 +1,38 @@
+{
+  "manifestVersion": 5,
+  "id": "harayoki.pixel-art-validator-msx1",
+  "name": "Pixel Art Validator (MSX1 / TMS9918)",
+  "version": "1.0.0",
+  "description": "Detects areas where more than 2 colors are used within 8 horizontal pixels",
+  "author": "harayoki",
+  "host": {
+    "app": "PS",
+    "minVersion": "23.0.0"
+  },
+  "main": "index.html",
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "analyze_pannel",
+      "minimumSize": {
+        "width": 230,
+        "height": 200
+      },
+      "maximumSize": {
+        "width": 2000,
+        "height": 2000
+      },
+      "preferredDockedSize": {
+        "width": 230,
+        "height": 220
+      },
+      "preferredFloatingSize": {
+        "width": 230,
+        "height": 220
+      },
+      "label": {
+        "default": "Analyze Panel"
+      }
+    }
+  ]
+}

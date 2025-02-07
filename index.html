@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="main.js"></script> 
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+    <h2>Pixel Art Validator (MSX1)</h2>
+
+    <label for="inputMaxColorsInImage">Maximum number of colors allowed in the entire image:</label>
+    <p><input id="inputMaxColorsInImage" type="number" min="1" max="512" value="15"></input></p>
+
+    <p>Check if there are up to 2 colors within 8 pixels and select the parts that are in violation.</p>
+    <div>
+    <p><sp-button id="btnAnalyzeAndSelect">Analyze and Select</sp-button></p>
+    </div>
+</body>
+</html>
+
