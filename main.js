@@ -90,7 +90,7 @@ function findColorViolations(pixels, width) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x += 8) {
             let colors = new Set();
-            for (let dx = 0; dx < 8; dx++) {
+            for (let dx = 0; dx < Math.min(8, width - x); dx++) {
                 const index = ((y * width) + (x + dx)) * 4;
                 const r = pixels[index];
                 const g = pixels[index + 1];
@@ -128,7 +128,7 @@ async function selectViolationAreas(violations) {
                 selectionType = cnt == 0 ? constants.SelectionType.REPLACE: constants.SelectionType.EXTEND;
                 console.log("selectionType", selectionType);
                 await doc.selection.selectRectangle(
-                    { top: y, left: x, bottom: y + 1, right: x + 8 },
+                    { top: y, left: x, bottom: y + 1, right: Math.min(x + 8, doc.width) },
                     selectionType
                 );
                 console.log("selectRectangle", x, y);
