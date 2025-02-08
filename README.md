@@ -36,11 +36,16 @@ Since it is not planned to be distributed on the marketplace, it needs to be ins
 
 ## 🛠️ Usage
 * Find this plugin in the plugin menu and open the panel.
+
+![plugin panel](doc_images/panel.png)
+
 * Select a single layer with the image you want to check.
 * Enter the total number of available colors in the panel and press the button.
 * If a regulation violation is found, the area will be selected.
 
-![plugin panel](doc_images/panel.png)
+![selection](doc_images/selected.png)
+
+* If there are many errors, it may take several seconds to several minutes to complete the process.
 
 ## 🎁 Bonus File
 

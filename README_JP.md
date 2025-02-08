@@ -1,7 +1,7 @@
 
 # Pixel Art Validator MSX1 (Photoshop UXP Plugin)
 
-README in english is here. [README.md](README.md)
+The English README is here: [README.md](README.md)
 
 ## 🔧 ツール概要
 
@@ -39,11 +39,16 @@ MSX1などTMS9918を画像チップとして私用しているマシンの画面
 
 ## 🛠️ 使い方
 * プラグインメニューからこのプラグインの項目を探し、パネルを開きます。
+
+![plugin panel](doc_images/panel.png)
+
 * チェックしたい画像のあるレイヤーを１つ選択します。
 * パネルに全体の利用可能色数を入力し、ボタンを押します。
 * レギュレーション違反が見つかった場合、その箇所が選択されます。
 
-![plugin panel](doc_images/panel.png)
+![selection](doc_images/selected.png)
+
+※ エラー個所が多い場合、処理完了まで数十秒～数分ほど時間がかかります。
 
 ## 🎁 おまけファイル
 
