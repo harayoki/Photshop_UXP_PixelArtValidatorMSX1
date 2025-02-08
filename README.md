@@ -6,6 +6,8 @@
 
 This tool checks the regulations (up to 2 colors within 8 horizontal dots, up to 16 colors in total or 15 colors excluding transparency) when you want to reproduce the screen of a machine using TMS9918 as an image chip such as MSX1 with pixel art. It does not check the overall size of the image (256*192).
 
+* It seems that the program cannot analyze images in INDEX color mode. Please switch to RGB 8-bit mode.
+
 ## 📌 Features
 - Check if the pixels in the layer fit within 2 colors in 8 horizontal pixels.
 - Detect the use of more than 15 colors.
@@ -45,7 +47,11 @@ Since it is not planned to be distributed on the marketplace, it needs to be ins
 
 ![selection](doc_images/selected.png)
 
+## 💀 Known Issue
+
+* Guaranteed to work only in RGB 8-bit color mode. Does not work in INDEX color mode.
 * If there are many errors, it may take several seconds to several minutes to complete the process.
+
 
 ## 🎁 Bonus File
 

@@ -20,6 +20,7 @@ async function analyze_with_try_catch() {
         await analyze();
     } catch (e) {
         console.log("analyze error", e);
+        app.showAlert(`analyze error ${e}`);
     }
 }
 
@@ -28,53 +29,53 @@ async function analyze() {
     maxNumberOfColors = document.getElementById("inputMaxColorsInImage").value;
 
     const doc = app.activeDocument;
-    console.log("analyze start");
     if (!doc) {
-         app.showAlert("No document is open.");
-        return;
+        return app.showAlert("No document is open.");
     }
 
     const layer = doc.activeLayers[0];
     if (!layer) {
-         app.showAlert("Please select a layer.");
-        return;
+        return app.showAlert("Please select a layer.");
+    }
+
+    console.log(doc.mode)
+    if (doc.mode === "indexedColorMode") {
+        return app.showAlert("This does not work in indexed color mode. Please convert to RGB mode.");
     }
     
     const pixels = await getLayerPixelData(layer);
     if (!pixels) {
-         app.showAlert("Could not retrieve pixel data from the layer.");
-        return;
+        return app.showAlert("Could not retrieve pixel data from the layer.");
     }
 
     const violations = findColorViolations(pixels, doc.width);
     const numColor = getNumColor(pixels);
 
     if (violations.length === 0 && numColor <= maxNumberOfColors) {
-         app.showAlert("No violations found.");
-         return;
+        return app.showAlert("No violations found.");
     }
 
     if (violations.length > 0){
-        console.log("selectViolationAreas start");
         try {
             await selectViolationAreas(violations);
         } catch (e) {
-            console.log("selectViolationAreas error", e);
+            console.error("selectViolationAreas error", e);
+            throw e;
         }
-        console.log("selectViolationAreas end");    
     }
 
     message = `There are ${violations.length} violations.`;
     if (numColor > maxNumberOfColors) {
         message += ` Additionally, there are ${numColor} colors, exceeding the limit of ${maxNumberOfColors} colors.`;
     }
-    app.showAlert(message);
+    return app.showAlert(message);
 
 }
 
 async function getLayerPixelData(layer) {
     return core.executeAsModal(async () => {
         const imaging = require("photoshop").imaging;
+        /* getPixels returns error when image is color mode 2 (index color) */
         const imageObj = await imaging.getPixels({
             documentID: app.activeDocument.id,
             layerID: layer.id
@@ -123,15 +124,18 @@ async function selectViolationAreas(violations) {
         let cnt = -1;
         for (const { x, y } of violations) {
             cnt += 1;
-            console.log("cnt", cnt);
             try {
                 selectionType = cnt == 0 ? constants.SelectionType.REPLACE: constants.SelectionType.EXTEND;
-                console.log("selectionType", selectionType);
+                // const selectionRegions = violations.map(({ x, y }) => ({
+                //     top: y,
+                //     left: x,
+                //     bottom: y + 1,
+                //     right: Math.min(x + 8, doc.width)
+                // }));
                 await doc.selection.selectRectangle(
                     { top: y, left: x, bottom: y + 1, right: Math.min(x + 8, doc.width) },
-                    selectionType
+                    selectionType, 0, false
                 );
-                console.log("selectRectangle", x, y);
             } catch (e) {
                 console.log("selectRectangle error", e);
             }
