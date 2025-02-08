@@ -50,7 +50,7 @@ Since it is not planned to be distributed on the marketplace, it needs to be ins
 ## 💀 Known Issue
 
 * Guaranteed to work only in RGB 8-bit color mode. Does not work in INDEX color mode.
-* If there are many errors, it may take several seconds to several minutes to complete the process.
+* If there are many errors, it may take several seconds to complete the process.
 
 
 ## 🎁 Bonus File

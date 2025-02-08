@@ -38,7 +38,6 @@ async function analyze() {
         return app.showAlert("Please select a layer.");
     }
 
-    console.log(doc.mode)
     if (doc.mode === "indexedColorMode") {
         return app.showAlert("This does not work in indexed color mode. Please convert to RGB mode.");
     }
@@ -57,7 +56,7 @@ async function analyze() {
 
     if (violations.length > 0){
         try {
-            await selectViolationAreas(violations);
+            await selectViolationAreas_v2(violations);
         } catch (e) {
             console.error("selectViolationAreas error", e);
             throw e;
@@ -117,29 +116,58 @@ function getNumColor(pixels) {
     return colors.size;
 }
 
-async function selectViolationAreas(violations) {
+// async function selectViolationAreas_v1(violations) {
     
+//     await core.executeAsModal(async () => {
+//         const doc = app.activeDocument;        
+//         let cnt = -1;
+//         for (const { x, y } of violations) {
+//             cnt += 1;
+//             try {
+//                 selectionType = cnt == 0 ? constants.SelectionType.REPLACE: constants.SelectionType.EXTEND;
+//                 await doc.selection.selectRectangle(
+//                     { top: y, left: x, bottom: y + 1, right: Math.min(x + 8, doc.width) },
+//                     selectionType, 0, false
+//                 );
+//             } catch (e) {
+//                 console.log("selectRectangle error", e);
+//             }
+//         }
+//     }, { commandName: "Select Violation Areas"});
+// }
+
+async function selectViolationAreas_v2(violations) {
     await core.executeAsModal(async () => {
         const doc = app.activeDocument;        
-        let cnt = -1;
-        for (const { x, y } of violations) {
-            cnt += 1;
-            try {
-                selectionType = cnt == 0 ? constants.SelectionType.REPLACE: constants.SelectionType.EXTEND;
-                // const selectionRegions = violations.map(({ x, y }) => ({
-                //     top: y,
-                //     left: x,
-                //     bottom: y + 1,
-                //     right: Math.min(x + 8, doc.width)
-                // }));
-                await doc.selection.selectRectangle(
-                    { top: y, left: x, bottom: y + 1, right: Math.min(x + 8, doc.width) },
-                    selectionType, 0, false
-                );
-            } catch (e) {
-                console.log("selectRectangle error", e);
-            }
+
+        const componentCount = doc.width * doc.height;
+        const arrayBuffer = new Uint8Array(componentCount);
+        for (let i = 0 ; i < componentCount; ++i) {
+           arrayBuffer[i] = 0;
         }
-    }, { commandName: "Select Violation Areas" });
+        for (const { x, y } of violations) {
+            for (let xx = x; xx < Math.min(x + 8, doc.width); xx++) {
+                arrayBuffer[y * doc.width + xx] = 255;
+            }
+        }        
+        const options = {
+            width: doc.width,
+            height: doc.height,
+            components: 1,  // masks are grayscale
+            chunky: false,
+            // colorProfile: "Gray Gamma 2.2",
+            colorSpace: "Grayscale"
+        };
+        const maskData = await imaging.createImageDataFromBuffer(arrayBuffer, options)        
+
+        await imaging.putSelection({
+            documentID: doc.id,
+            imageData: maskData,
+            replace: true,
+            targetBounds: { top: 0, left: 0, bottom: doc.height, right: doc.width }
+            // commandName: "Select Violation Areas"
+        });
+
+    }, { commandName: "Select Violation Areas"});
 }
 
