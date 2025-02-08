@@ -13,11 +13,19 @@ entrypoints.setup({
       }  
   });
 
-document.getElementById("btnAnalyzeAndSelect").addEventListener("click", () => {analyze()});
+document.getElementById("btnAnalyzeAndSelect").addEventListener("click", () => {analyze_with_try_catch()});
+
+async function analyze_with_try_catch() {
+    try {
+        await analyze();
+    } catch (e) {
+        console.log("analyze error", e);
+    }
+}
 
 async function analyze() {
 
-    maxNumberOfColors = document.getElementById("inputNumberOfColors").value;
+    maxNumberOfColors = document.getElementById("inputMaxColorsInImage").value;
 
     const doc = app.activeDocument;
     console.log("analyze start");
