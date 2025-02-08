@@ -30,7 +30,7 @@ MSX1などTMS9918を画像チップとして私用しているマシンの画面
 
 ## 📥 インストール方法
 
-* リリースページ から ZIP ファイルをダウンロードして適当な場所に配置します。
+* [リリースページ](https://github.com/harayoki/Photshop_UXP_PixelArtValidatorMSX1/releases) から ZIP ファイルをダウンロードして適当な場所に配置します。
 * もしくは、このリポジトリをローカルフォルダにクローンする。
 * Photoshopを立ち上げます。
 * UXP Developer tools を立ち上げます。
