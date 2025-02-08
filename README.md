@@ -28,7 +28,7 @@ Since it is not planned to be distributed on the marketplace, it needs to be ins
 
 ## 📥 Installation
 
-* Download the ZIP file from the release page and place it in an appropriate location.
+* Download the ZIP file from the [release page](https://github.com/harayoki/Photshop_UXP_PixelArtValidatorMSX1/releases) and place it in an appropriate location.
 * Alternatively, clone this repository to a local folder.
 * Launch Photoshop.
 * Launch UXP Developer tools.
