@@ -50,7 +50,8 @@ Since it is not planned to be distributed on the marketplace, it needs to be ins
 ## 💀 Known Issue
 
 * Guaranteed to work only in RGB 8-bit color mode. Does not work in INDEX color mode.
-* If there are many errors, it may take several seconds to complete the process.
+* 画像が大きい場合や配色エラー個所が多い場合、処理完了まで数秒～数十秒ほど時間がかかります。
+* レイヤーが統合されているファイル（png, psd）を処理する際、処理時間が通常の10位程度かかり、かつエラー検知数も正確な値より大きく検知されることがあります。統合レイヤーを通常のレイヤーに変更してから処理を行ってください。
 
 
 ## 🎁 Bonus File
